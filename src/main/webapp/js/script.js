@@ -5,6 +5,9 @@ areaImage.onclick = function (e){
     let yOnImage = e.y - imageCoords.top;
 
     console.log(xOnImage + " " + yOnImage);
+
+    console.log(areaImage.width);
+    console.log(areaImage.height);
 }
 
 function getElementCoords(elem) { // кроме IE8-
