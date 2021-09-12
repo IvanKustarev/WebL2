@@ -1,21 +1,30 @@
 let areaImage = document.getElementById("areaImage");
-areaImage.onclick = function (e){
-    let imageCoords = getElementCoords(areaImage);
-    let xOnImage = e.x - imageCoords.left;
-    let yOnImage = e.y - imageCoords.top;
+areaImage.onclick = function (e) {
 
-    console.log(xOnImage + " " + yOnImage);
 
-    console.log(areaImage.width);
-    console.log(areaImage.height);
+    if (document.getElementById("R").value !== "") {
+
+        let x = (e.x - areaImage.x - areaImage.width / 2) / 140 * (document.getElementById("R").value);
+        let y = (areaImage.height / 2 - (e.y - areaImage.y)) / 140 * (document.getElementById("R").value);
+
+
+        if (!validation(x, y)) {
+            return;
+        } else {
+            console.log(document.getElementById("R").value)
+            document.getElementById("X").value = x;
+            document.getElementById("Y").value = y;
+
+            let form = document.getElementById("mainForm");
+            form.action = '/ControllerServlet';
+            form.method = 'post';
+            form.innerHTML = '<input name="X" value="' + x + '"><input name="Y" value="' + y + '"><input name="R" value="' + document.getElementById("R").value + '">';
+            form.submit();
+        }
+    }
 }
 
-function getElementCoords(elem) { // кроме IE8-
-    var box = elem.getBoundingClientRect();
+function validation() {
 
-    return {
-        top: box.top + pageYOffset,
-        left: box.left + pageXOffset
-    };
-
+    return true;
 }

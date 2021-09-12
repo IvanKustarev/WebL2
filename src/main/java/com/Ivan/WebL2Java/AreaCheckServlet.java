@@ -1,8 +1,12 @@
 package com.Ivan.WebL2Java;
 
+import javax.imageio.ImageIO;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 @WebServlet(name = "AreaCheckServlet", value = "/AreaCheckServlet")
@@ -14,22 +18,40 @@ public class AreaCheckServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        double x = Float.valueOf(request.getParameter("X"));
-        double y = Float.valueOf(request.getParameter("Y"));
-        double r = Float.valueOf(request.getParameter("R"));
+        float x = 0;
+        float y = 0;
+        float r = 0;
+        try {
+            x = Float.valueOf(request.getParameter("X"));
+            y = Float.valueOf(request.getParameter("Y"));
+            r = Float.valueOf(request.getParameter("R"));
+        }catch (Exception e){
+            RequestDispatcher dispatcher = request.getRequestDispatcher(SentTo.INDEX.toString());
+            dispatcher.forward(request, response);
+        }
         boolean got = checkDot(x, y, r);
-        request.setAttribute("got", got);
-
-        String paramsString = x + "," + y + "," + r + "," + got;
-        HttpSession session = request.getSession();
-        if(session.getAttribute("lastRequests") == null){
-            session.setAttribute("lastRequests", paramsString);
-        }else {
-            session.setAttribute("lastRequests", (String) (session.getAttribute("lastRequests")) + ";" + paramsString);
+        addRequestParameters(x, y, r, got, request);
+        if(got){
+            modifyAreaImage(x, y, r, request.getSession());
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("reply.jsp");
         dispatcher.forward(request, response);
+    }
+
+    private enum SentTo {
+        AREA_CHECK {
+            @Override
+            public String toString() {
+                return "/AreaCheckServlet";
+            }
+        },
+        INDEX {
+            @Override
+            public String toString() {
+                return "index.jsp";
+            }
+        }
     }
 
     private boolean checkDot(double x, double y, double r) {
@@ -44,7 +66,6 @@ public class AreaCheckServlet extends HttpServlet {
             }
         }
         if (x <= 0 && y <= 0) {
-//            y = -Rx -R - уравнение прямой
             if (-r * x - r - y <= 0) {
                 return true;
             } else {
@@ -55,5 +76,68 @@ public class AreaCheckServlet extends HttpServlet {
             return true;
         }
         return false;
+    }
+
+    private void addRequestParameters(float x, float y, float r, boolean got, HttpServletRequest request){
+        request.setAttribute("got", got);
+        String paramsString = x + "," + y + "," + r + "," + got;
+        HttpSession session = request.getSession();
+        if(session.getAttribute("lastRequests") == null){
+            session.setAttribute("lastRequests", paramsString);
+        }else {
+            session.setAttribute("lastRequests", (String) (session.getAttribute("lastRequests")) + ";" + paramsString);
+        }
+    }
+
+    private void modifyAreaImage(float x, float y, float r, HttpSession session){
+        BufferedImage bImage = null;
+        if(session.getAttribute("areaImage") == null){
+            bImage = loadImage();
+        }else {
+            bImage = (BufferedImage) session.getAttribute("areaImage");
+        }
+        addDotToArea(bImage, x, y, r);
+        session.setAttribute("areaImage", bImage);
+    }
+
+    private BufferedImage addDotToArea(BufferedImage bImage, float x, float y, float r){
+        int xPix = Math.round(140*x/r);
+        int yPix = Math.round(140*y/r);
+
+        int dotStartX = 0;
+        int dotStartY = 0;
+        int dotWidth = 0;
+        int dotHeight = 0;
+        dotStartX = bImage.getWidth() / 2 - 2 + xPix;
+        if (bImage.getWidth() % 2 == 1) {
+            dotWidth = 5;
+        } else {
+            dotWidth = 4;
+        }
+        dotStartY = bImage.getHeight() / 2 - 2 - yPix;
+        if (bImage.getHeight() % 2 == 1) {
+            dotHeight = 5;
+        } else {
+            dotHeight = 4;
+        }
+        Graphics graphics = bImage.getGraphics();
+        graphics.fillRect(dotStartX, dotStartY, dotWidth, dotHeight);
+
+        return bImage;
+    }
+
+    private BufferedImage loadImage(){
+        BufferedImage bImage= null;
+        try {
+            bImage = ImageIO.read(new File("public_html/wildfly-24.0.1.Final/standalone/resources/area.png"));//give the path of an image
+        } catch (IOException e1) {
+            try {
+                bImage = ImageIO.read(new File("area.png"));
+            } catch (IOException e2) {
+                System.out.println("Problem with areas image loading");
+            }
+        }
+
+        return bImage;
     }
 }

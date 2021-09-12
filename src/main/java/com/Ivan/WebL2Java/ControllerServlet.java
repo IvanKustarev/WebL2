@@ -16,41 +16,48 @@ public class ControllerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (isValidateRequest(request)) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(SentTo.AREA_CHECK.toString());
+            dispatcher.forward(request, response);
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(SentTo.INDEX.toString());
+            dispatcher.forward(request, response);
+        }
+    }
 
-//        validation
-        double x = 0;
-        double y = 0;
-        double r = 0;
+
+    private enum SentTo {
+        AREA_CHECK {
+            @Override
+            public String toString() {
+                return "/AreaCheckServlet";
+            }
+        },
+        INDEX {
+            @Override
+            public String toString() {
+                return "index.jsp";
+            }
+        }
+    }
+
+    private boolean isValidateRequest(HttpServletRequest request) {
+        float x = 0;
+        float y = 0;
+        float r = 0;
+
         if (request.getParameter("X") != null && request.getParameter("Y") != null && request.getParameter("R") != null) {
             try {
                 x = Float.valueOf(request.getParameter("X"));
                 y = Float.valueOf(request.getParameter("Y"));
                 r = Float.valueOf(request.getParameter("R"));
             } catch (Exception e) {
-                RequestDispatcher dispatcher = request.getRequestDispatcher(SentTo.INDEX.toString());
-                dispatcher.forward(request, response);
+                return false;
             }
-        }else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(SentTo.INDEX.toString());
-            dispatcher.forward(request, response);
+        } else {
+            return false;
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(SentTo.AREA_CHECK.toString());
-        dispatcher.forward(request, response);
-    }
-
-    private enum SentTo {
-        AREA_CHECK{
-            @Override
-            public String toString() {
-                return "/AreaCheckServlet";
-            }
-        },
-        INDEX{
-            @Override
-            public String toString() {
-                return "index.jsp";
-            }
-        }
+        return true;
     }
 }
