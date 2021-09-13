@@ -16,6 +16,13 @@ public class ControllerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        if(isClearRequest(request)){
+            HttpSession session = request.getSession();
+            session.removeAttribute("lastRequests");
+            session.removeAttribute("areaImage");
+        }
+
         if (isValidateRequest(request)) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(SentTo.AREA_CHECK.toString());
             dispatcher.forward(request, response);
@@ -59,5 +66,14 @@ public class ControllerServlet extends HttpServlet {
         }
 
         return true;
+    }
+
+    private boolean isClearRequest(HttpServletRequest request){
+        if(request.getParameter("clear") != null){
+            if(Boolean.valueOf(request.getParameter("clear"))){
+                return true;
+            }
+        }
+        return false;
     }
 }

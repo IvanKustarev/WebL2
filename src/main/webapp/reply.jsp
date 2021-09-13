@@ -11,6 +11,10 @@
     <title>Reply</title>
 </head>
 <body>
+<header>
+    <div>Кустарев Иван Павлович P3215</div>
+    <div>Вариант 15012</div>
+</header>
 <p>
         <span>
             X:
@@ -32,7 +36,13 @@
 <p>
         <span>
             Попала:
-            <%= String.valueOf(request.getAttribute("got")) %>
+            <%
+                if ((Boolean) request.getAttribute("got")) {
+                    out.print("Да");
+                } else {
+                    out.print("Нет");
+                }
+            %>
         </span>
 </p>
 <p>

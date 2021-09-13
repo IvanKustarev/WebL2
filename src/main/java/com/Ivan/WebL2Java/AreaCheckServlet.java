@@ -25,15 +25,13 @@ public class AreaCheckServlet extends HttpServlet {
             x = Float.valueOf(request.getParameter("X"));
             y = Float.valueOf(request.getParameter("Y"));
             r = Float.valueOf(request.getParameter("R"));
-        }catch (Exception e){
+        } catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher(SentTo.INDEX.toString());
             dispatcher.forward(request, response);
         }
         boolean got = checkDot(x, y, r);
         addRequestParameters(x, y, r, got, request);
-        if(got){
-            modifyAreaImage(x, y, r, request.getSession());
-        }
+        modifyAreaImage(x, y, r, got, request.getSession());
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("reply.jsp");
         dispatcher.forward(request, response);
@@ -78,31 +76,41 @@ public class AreaCheckServlet extends HttpServlet {
         return false;
     }
 
-    private void addRequestParameters(float x, float y, float r, boolean got, HttpServletRequest request){
+    private void addRequestParameters(float x, float y, float r, boolean got, HttpServletRequest request) {
         request.setAttribute("got", got);
-        String paramsString = x + "," + y + "," + r + "," + got;
-        HttpSession session = request.getSession();
-        if(session.getAttribute("lastRequests") == null){
-            session.setAttribute("lastRequests", paramsString);
+        String paramsString = null;
+        if(got){
+            paramsString = x + "," + y + "," + r + ",Да";
         }else {
-            session.setAttribute("lastRequests", (String) (session.getAttribute("lastRequests")) + ";" + paramsString);
+            paramsString = x + "," + y + "," + r + ",Нет";
+        }
+        HttpSession session = request.getSession();
+        if (session.getAttribute("lastRequests") == null) {
+            session.setAttribute("lastRequests", paramsString);
+        } else {
+            session.setAttribute("lastRequests", paramsString + ";" + (String)(session.getAttribute("lastRequests")));
         }
     }
 
-    private void modifyAreaImage(float x, float y, float r, HttpSession session){
+    private void modifyAreaImage(float x, float y, float r, boolean got, HttpSession session) {
         BufferedImage bImage = null;
-        if(session.getAttribute("areaImage") == null){
+        if (session.getAttribute("areaImage") == null) {
             bImage = loadImage();
-        }else {
+        } else {
             bImage = (BufferedImage) session.getAttribute("areaImage");
         }
-        addDotToArea(bImage, x, y, r);
+        if (got) {
+            addDotToArea(bImage, x, y, r, Color.decode("#E61B43"));
+        } else {
+            addDotToArea(bImage, x, y, r, Color.gray);
+        }
+
         session.setAttribute("areaImage", bImage);
     }
 
-    private BufferedImage addDotToArea(BufferedImage bImage, float x, float y, float r){
-        int xPix = Math.round(140*x/r);
-        int yPix = Math.round(140*y/r);
+    private BufferedImage addDotToArea(BufferedImage bImage, float x, float y, float r, Color color) {
+        int xPix = Math.round(140 * x / r);
+        int yPix = Math.round(140 * y / r);
 
         int dotStartX = 0;
         int dotStartY = 0;
@@ -121,13 +129,14 @@ public class AreaCheckServlet extends HttpServlet {
             dotHeight = 4;
         }
         Graphics graphics = bImage.getGraphics();
+        graphics.setColor(color);
         graphics.fillRect(dotStartX, dotStartY, dotWidth, dotHeight);
 
         return bImage;
     }
 
-    private BufferedImage loadImage(){
-        BufferedImage bImage= null;
+    private BufferedImage loadImage() {
+        BufferedImage bImage = null;
         try {
             bImage = ImageIO.read(new File("public_html/wildfly-24.0.1.Final/standalone/resources/area.png"));//give the path of an image
         } catch (IOException e1) {
