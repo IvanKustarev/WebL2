@@ -27,8 +27,8 @@ areaImage.onclick = function (e) {
             document.getElementsByClassName("Y")[0].value = y;
 
             let form = document.getElementById("mainForm");
-            form.action = '/ControllerServlet';
-            form.method = 'post';
+            // form.action = '/ControllerServlet';
+            // form.method = 'post';
             form.innerHTML = '<input name="X" value="' + x + '"><input name="Y" value="' + y + '"><input name="R" value="' + document.getElementsByClassName("R")[0].value + '">';
             form.submit();
         }

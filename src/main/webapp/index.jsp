@@ -18,7 +18,7 @@
         Вариант 15112</span></h1>
 </header>
 <table class="centering">
-    <form id="mainForm" action="/ControllerServlet"
+    <form id="mainForm" action="/lab2/ControllerServlet"
           onsubmit="return validation()"
           method="post">
         <%
@@ -168,7 +168,7 @@
             </td>
         </tr>
     </form>
-    <form id="clearForm" action="/ControllerServlet " method="post"></form>
+    <form id="clearForm" action="/lab2/ControllerServlet " method="post"></form>
 
     <%
         if (request.getSession().getAttribute("lastRequests") != null) {

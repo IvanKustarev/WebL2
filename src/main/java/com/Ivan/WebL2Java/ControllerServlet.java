@@ -6,7 +6,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "ControllerServlet", value = "/ControllerServlet")
+//@WebServlet(name = "ControllerServlet", value = "ControllerServlet")
 public class ControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,7 +37,7 @@ public class ControllerServlet extends HttpServlet {
         AREA_CHECK {
             @Override
             public String toString() {
-                return "/AreaCheckServlet";
+                return "AreaCheckServlet";
             }
         },
         INDEX {

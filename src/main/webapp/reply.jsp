@@ -58,7 +58,7 @@
     </tr>
     <tr>
         <td class="menuBlock">
-            <a href="/ControllerServlet"><span>На главную</span></a>
+            <a href="/lab2/ControllerServlet"><span>На главную</span></a>
         </td>
     </tr>
 </table>

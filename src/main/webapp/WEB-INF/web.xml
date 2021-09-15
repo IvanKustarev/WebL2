@@ -13,4 +13,14 @@
         <url-pattern>/ControllerServlet</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>AreaCheckServlet</servlet-name>
+        <servlet-class>com.Ivan.WebL2Java.AreaCheckServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AreaCheckServlet</servlet-name>
+        <url-pattern>/AreaCheckServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

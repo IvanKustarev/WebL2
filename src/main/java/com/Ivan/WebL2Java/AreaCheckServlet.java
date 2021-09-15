@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-@WebServlet(name = "AreaCheckServlet", value = "/AreaCheckServlet")
+//@WebServlet(name = "AreaCheckServlet", value = "AreaCheckServlet")
 public class AreaCheckServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,12 +37,6 @@ public class AreaCheckServlet extends HttpServlet {
     }
 
     private enum SentTo {
-        AREA_CHECK {
-            @Override
-            public String toString() {
-                return "/AreaCheckServlet";
-            }
-        },
         INDEX {
             @Override
             public String toString() {
