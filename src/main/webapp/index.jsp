@@ -173,6 +173,9 @@
     <%
         if (request.getSession().getAttribute("lastRequests") != null) {
             out.print("<tr><td class=\"menuBlock\">");
+            out.print("<div class=\"centering fillingAllAreaWidth tableHead\">\n" +
+                    "        <h2>Прошлые запросы</h2>\n" +
+                    "    </div>");
             out.print("<table class=\"centering fillingAllAreaWidth\">");
             String lastRequests = (String) (request.getSession().getAttribute("lastRequests"));
             String[] requests = lastRequests.split(";");

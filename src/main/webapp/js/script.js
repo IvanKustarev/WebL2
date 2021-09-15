@@ -12,12 +12,19 @@ areaImage.onclick = function (e) {
         let xPix = Math.round(e.pageX - elem_left);
         let yPix = Math.round(e.pageY - elem_top);
 
-        let x = (xPix - areaImage.width / 2) / 140 * (document.getElementsByClassName("R")[0].value);
-        let y = (areaImage.height / 2 - yPix) / 140 * (document.getElementsByClassName("R")[0].value);
+        let r = document.getElementsByClassName("R")[0].value;
+        r = replaceCommaToDot(r);
+        document.getElementsByClassName("R")[0].value = r;
+
+        let x = (xPix - areaImage.width / 2) / 140 * (r);
+        let y = (areaImage.height / 2 - yPix) / 140 * (r);
 
         x = x.toFixed(2);
         y = y.toFixed(2);
-        let r = document.getElementsByClassName("R")[0].value;
+
+        console.log(x);
+        console.log(y);
+        console.log(r + "\n\n");
 
         if (!validation(x, y, r)) {
             return;
@@ -27,12 +34,10 @@ areaImage.onclick = function (e) {
             document.getElementsByClassName("Y")[0].value = y;
 
             let form = document.getElementById("mainForm");
-            // form.action = '/ControllerServlet';
-            // form.method = 'post';
             form.innerHTML = '<input name="X" value="' + x + '"><input name="Y" value="' + y + '"><input name="R" value="' + document.getElementsByClassName("R")[0].value + '">';
             form.submit();
         }
-    }else {
+    } else {
         printToErrOuter("Необходимо задать параметр R \n");
         document.getElementById("rParameterTitle").classList.add("errColor");
     }
@@ -41,12 +46,14 @@ areaImage.onclick = function (e) {
 function validation(x, y, r) {
 
     clearErrFlags();
+
     if (x === undefined && y === undefined && r === undefined) {
         x = document.getElementsByClassName('X')[0].value;
-        // y = document.getElementsByClassName('Y')[0].value;
         r = document.getElementsByClassName('R')[0].value;
     }
 
+    r = replaceCommaToDot(r);
+    x = replaceCommaToDot(x);
 
     let isXValidate = tryXValidate(x);
     let isYValidate = tryYValidate(y);
@@ -57,6 +64,14 @@ function validation(x, y, r) {
         return true;
     }
     return false;
+}
+
+function replaceCommaToDot(value) {
+    let newValue = value.replace(",", ".");
+    if (isNaN(newValue)) {
+        return value;
+    }
+    return newValue;
 }
 
 function tryXValidate(x) {
@@ -159,11 +174,11 @@ clearButton.onclick = function (e) {
 }
 
 let submitBlock = document.getElementById("submitBlock");
-submitBlock.onclick = function (e){
+submitBlock.onclick = function (e) {
     document.getElementById("submitButton").click();
 }
 
 let clearBlock = document.getElementById("clearBlock");
-clearBlock.onclick = function (e){
+clearBlock.onclick = function (e) {
     document.getElementById("clearButton").click();
 }

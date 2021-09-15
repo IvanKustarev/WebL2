@@ -45,3 +45,8 @@ header {
     border-right: 1px solid;
     border-color: rgb(43, 149, 255);
 }
+
+.tableHead {
+    border-bottom: 1px solid;
+    border-color: rgb(43, 149, 255);
+}

@@ -57,13 +57,13 @@ public class AreaCheckServlet extends HttpServlet {
             }
         }
         if (x <= 0 && y <= 0) {
-            if (-r * x - r - y <= 0) {
+            if (-x - r - y <= 0) {
                 return true;
             } else {
                 return false;
             }
         }
-        if (((Math.pow(x, 2) + Math.pow(y, 2)) <= r / 2)) {
+        if ((Math.pow(x, 2) + Math.pow(y, 2)) <= Math.pow((r / 2), 2)) {
             return true;
         }
         return false;
