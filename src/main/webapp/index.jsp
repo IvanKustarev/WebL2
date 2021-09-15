@@ -11,57 +11,6 @@
 <head>
     <title>WebL2</title>
     <link href="css/style.css" rel="stylesheet" type="text/css">
-    <style>
-        .centering {
-            text-align: center;
-            margin: auto;
-        }
-
-        .standardColor {
-            color: darkblue;
-        }
-
-        .errColor {
-            color: #E61B43;
-        }
-
-        header {
-            border: 1px solid;
-            border-color: rgb(43, 149, 255);
-            border-radius: 10px;
-        }
-
-        .menuBlock {
-            border: 1px solid;
-            border-color: rgb(43, 149, 255);
-            border-radius: 10px;
-            padding: 20px;
-        }
-
-        .menuBlock.lightMenuBlock:hover {
-            border: 3px solid;
-            border-color: #E61B43;
-            border-radius: 10px;
-            padding: 18px;
-        }
-
-        .menuBlock
-        .buttonWithoutStyle {
-            border: unset;
-            background-color: white;
-        }
-
-        .fillingAllAreaWidth {
-            width: 100%;
-        }
-
-        .rightBorder {
-            border-right: 1px solid;
-            border-color: rgb(43, 149, 255);
-        }
-
-
-    </style>
 </head>
 <body class="standardColor">
 <header class="centering">

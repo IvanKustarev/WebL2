@@ -9,31 +9,41 @@
 <html>
 <head>
     <title>Reply</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-<header>
-    <div>Кустарев Иван Павлович P3215</div>
-    <div>Вариант 15012</div>
+<body class="standardColor">
+<header class="centering">
+    <h1><span>Кустарев Иван Павлович P3215<br>
+        Вариант 15112</span></h1>
 </header>
-<p>
+<table class="centering">
+    <tr>
+        <td class="menuBlock">
         <span>
             X:
             <%= String.valueOf(request.getParameter("X")) %>
         </span>
-</p>
-<p>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="menuBlock">
         <span>
             Y:
             <%= String.valueOf(request.getParameter("Y")) %>
         </span>
-</p>
-<p>
+        </td>
+    </tr>
+    <tr>
+        <td class="menuBlock">
         <span>
             R:
             <%= String.valueOf(request.getParameter("R")) %>
         </span>
-</p>
-<p>
+        </td>
+    </tr>
+    <tr>
+        <td class="menuBlock">
         <span>
             Попала:
             <%
@@ -44,9 +54,13 @@
                 }
             %>
         </span>
-</p>
-<p>
-    <a href="/ControllerServlet"><span>На главную</span></a>
-</p>
+        </td>
+    </tr>
+    <tr>
+        <td class="menuBlock">
+            <a href="/ControllerServlet"><span>На главную</span></a>
+        </td>
+    </tr>
+</table>
 </body>
 </html>
