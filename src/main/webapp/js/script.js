@@ -1,4 +1,5 @@
 let areaImage = document.getElementById("areaImage");
+
 areaImage.onclick = function (e) {
     clearErrFlags();
     if (document.getElementsByClassName("R")[0].value !== "") {
@@ -18,10 +19,6 @@ areaImage.onclick = function (e) {
 
         x = x.toFixed(2);
         y = y.toFixed(2);
-
-        console.log(x);
-        console.log(y);
-        console.log(r + "\n\n");
 
         if (!validation(x, y, r)) {
             return;

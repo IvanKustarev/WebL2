@@ -1,10 +1,4 @@
-<%@ page import="java.util.Date" %><%--
-  Created by IntelliJ IDEA.
-  User: Ivan
-  Date: 04.09.2021
-  Time: 13:23
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -18,13 +12,13 @@
 </header>
 <table class="centering">
     <tr>
-        <td class="menuBlock" width="50%">
+        <td class="menuBlock" width="50%" height="33">
         <span>
             X:
             <%= String.valueOf(request.getParameter("X")) %>
         </span>
         </td>
-        <td class="menuBlock" width="50%">
+        <td class="menuBlock" width="50%" height="33">
         <span>
             R:
             <%= String.valueOf(request.getParameter("R")) %>
@@ -33,13 +27,13 @@
     </tr>
 
     <tr>
-        <td class="menuBlock" width="50%">
+        <td class="menuBlock" width="50%" height="33">
         <span>
             Y:
             <%= String.valueOf(request.getParameter("Y")) %>
         </span>
         </td>
-        <td class="menuBlock" width="50%">
+        <td class="menuBlock" width="50%" height="33">
         <span>
             Попала:
             <%
@@ -53,10 +47,11 @@
         </td>
     </tr>
     <tr>
-        <td class="menuBlock" colspan="2">
-            <a href="/lab2/ControllerServlet"><span>На главную</span></a>
+        <td id="toMainInReply" class="menuBlock" colspan="2" height="34">
+            <span class="standardColor">На главную</span>
         </td>
     </tr>
 </table>
+<script src="js/replyScript.js"></script>
 </body>
 </html>

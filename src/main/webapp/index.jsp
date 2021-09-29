@@ -55,7 +55,7 @@
                     Параметр X
                 </span>
                 </h2>
-                <input name="X" class="X textField" type="text" placeholder="-3;3">
+                <input name="X" class="X textField textInputField" type="text" placeholder="-3;3">
             </td>
             <td class="menuBlock" rowspan="2">
                 <h2>
@@ -135,9 +135,9 @@
                 </span>
                 </h2>
                 <% if (request.getSession().getAttribute("R") != null) {
-                    out.print("<input name=\"R\" class=\"R textField\" type=\"text\" placeholder=\"2;5\" value=\"" + request.getSession().getAttribute("R") + "\">");
+                    out.print("<input name=\"R\" class=\"R textField textInputField\" type=\"text\" placeholder=\"(2;5)\" value=\"" + request.getSession().getAttribute("R") + "\">");
                 } else {
-                    out.print("<input name=\"R\" class=\"R textField\" type=\"text\" placeholder=\"2;5\">");
+                    out.print("<input name=\"R\" class=\"R textField textInputField\" type=\"text\" placeholder=\"(2;5)\">");
                 }%>
             </td>
         </tr>
@@ -178,12 +178,12 @@
             out.print("<table class=\"centering fillingAllAreaWidth\">");
             String lastRequests = (String) (request.getSession().getAttribute("lastRequests"));
             String[] requests = lastRequests.split(";");
-            out.print("<tr><td><h3>X</h3></td><td><h3>Y</h3></td><td><h3>R</h3></td><td><h3>Изначально попала</h3></td></tr>");
+            out.print("<tr><td width=\"25%\"><h3>X</h3></td><td width=\"25%\"><h3>Y</h3></td><td width=\"25%\"><h3>R</h3></td><td width=\"25%\"><h3>Изначально попала</h3></td></tr>");
             for (String req : requests) {
-                out.print("<tr class=\"centering\">");
+                out.print("<tr class=\"centering tableRow\">");
                 String[] reqParameters = req.split(",");
                 for (String param : reqParameters) {
-                    out.print("<td><h3>" + param + "</h3></td>");
+                    out.print("<td width=\"25%\"><h3>" + param + "</h3></td>");
                 }
                 out.print("</tr>");
             }

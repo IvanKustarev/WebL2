@@ -31,7 +31,7 @@ header {
     padding: 18px;
 }
 
-.menuBlock
+/*.menuBlock*/
 .buttonWithoutStyle {
     border: unset;
     background-color: white;
@@ -49,4 +49,28 @@ header {
 .tableHead {
     border-bottom: 1px solid;
     border-color: rgb(43, 149, 255);
+}
+.linkBlock{
+    position: absolute; /* Абсолютное позиционирование */
+    left: 0; right: 0; /* По ширине ячейки */
+    top: 0; bottom: 0; /* По высоте ячейки */
+}
+.textInputField{
+    text-align: center;
+}
+
+#toMainInReply{
+    font-weight: bold;
+    padding: 2px;
+}
+
+#toMainInReply:hover{
+    font-weight: bold;
+    padding: 0px;
+    border: solid #E61B43 3px;
+    cursor: pointer;
+}
+
+#areaImage{
+    cursor: pointer;
 }
