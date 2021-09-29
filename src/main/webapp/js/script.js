@@ -1,10 +1,7 @@
 let areaImage = document.getElementById("areaImage");
 areaImage.onclick = function (e) {
-
-
+    clearErrFlags();
     if (document.getElementsByClassName("R")[0].value !== "") {
-
-
         let pos = $(this).offset();
         let elem_left = Math.round(pos.left);
         let elem_top = Math.round(pos.top);
@@ -154,7 +151,6 @@ function clearErrFlags() {
         parameterTitle.classList.remove("errColor");
         parameterTitle.classList.add("standardColor")
     }
-
 }
 
 function printToErrOuter(str) {

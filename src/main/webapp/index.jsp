@@ -45,24 +45,19 @@
             String b64 = javax.xml.bind.DatatypeConverter.printBase64Binary(imageInByteArray);
         %>
         <tr>
-            <td class="menuBlock">
+            <td class="menuBlock" rowspan="4">
                 <img id="areaImage" src="data:image/jpg;base64, <%=b64%>"
                      alt="Здесь должна быть картинка области"/>
             </td>
-        <tr>
-        <tr>
-            <td class="menuBlock">
+            <td class="menuBlock" rowspan="1">
                 <h2>
                 <span id="xParameterTitle" class="parameterTitle">
                     Параметр X
                 </span>
                 </h2>
-                <input name="X" class="X textField" type="text">
+                <input name="X" class="X textField" type="text" placeholder="-3;3">
             </td>
-        </tr>
-
-        <tr>
-            <td class="menuBlock">
+            <td class="menuBlock" rowspan="2">
                 <h2>
                 <span id="yParameterTitle" class="parameterTitle">
                     Параметр Y
@@ -133,17 +128,21 @@
             </td>
         </tr>
         <tr>
-            <td class="menuBlock">
+            <td class="menuBlock" rowspan="1">
                 <h2>
                 <span id="rParameterTitle" class="parameterTitle">
                     Параметр R
                 </span>
                 </h2>
-                <input name="R" class="R textField" type="text">
+                <% if (request.getSession().getAttribute("R") != null) {
+                    out.print("<input name=\"R\" class=\"R textField\" type=\"text\" placeholder=\"2;5\" value=\"" + request.getSession().getAttribute("R") + "\">");
+                } else {
+                    out.print("<input name=\"R\" class=\"R textField\" type=\"text\" placeholder=\"2;5\">");
+                }%>
             </td>
         </tr>
         <tr>
-            <td id="submitBlock" class="menuBlock lightMenuBlock">
+            <td id="submitBlock" class="menuBlock lightMenuBlock" colspan="2">
                 <table class="centering">
                     <tr>
                         <td>
@@ -161,7 +160,7 @@
             </td>
         </tr>
         <tr>
-            <td id="clearBlock" class="menuBlock lightMenuBlock">
+            <td id="clearBlock" class="menuBlock lightMenuBlock" colspan="2">
                 <button id="clearButton" type="button" id="clearButton"
                         class="buttonWithoutStyle centering standardColor"><h2>
                     Очистить</h2></button>
@@ -172,14 +171,14 @@
 
     <%
         if (request.getSession().getAttribute("lastRequests") != null) {
-            out.print("<tr><td class=\"menuBlock\">");
+            out.print("<tr><td class=\"menuBlock\" colspan = \"3\">");
             out.print("<div class=\"centering fillingAllAreaWidth tableHead\">\n" +
                     "        <h2>Прошлые запросы</h2>\n" +
                     "    </div>");
             out.print("<table class=\"centering fillingAllAreaWidth\">");
             String lastRequests = (String) (request.getSession().getAttribute("lastRequests"));
             String[] requests = lastRequests.split(";");
-            out.print("<tr><td><h3>X</h3></td><td><h3>Y</h3></td><td><h3>R</h3></td><td><h3>Попала</h3></td></tr>");
+            out.print("<tr><td><h3>X</h3></td><td><h3>Y</h3></td><td><h3>R</h3></td><td><h3>Изначально попала</h3></td></tr>");
             for (String req : requests) {
                 out.print("<tr class=\"centering\">");
                 String[] reqParameters = req.split(",");

@@ -30,7 +30,8 @@ public class AreaCheckServlet extends HttpServlet {
         }
         boolean got = checkDot(x, y, r);
         addRequestParameters(x, y, r, got, request);
-        modifyAreaImage(x, y, r, got, request.getSession());
+        request.getSession().setAttribute("R", String.valueOf(r));
+        modifyAreaImage(request.getSession(), r);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("reply.jsp");
         dispatcher.forward(request, response);
@@ -72,30 +73,41 @@ public class AreaCheckServlet extends HttpServlet {
     private void addRequestParameters(float x, float y, float r, boolean got, HttpServletRequest request) {
         request.setAttribute("got", got);
         String paramsString = null;
-        if(got){
+        if (got) {
             paramsString = x + "," + y + "," + r + ",Да";
-        }else {
+        } else {
             paramsString = x + "," + y + "," + r + ",Нет";
         }
         HttpSession session = request.getSession();
         if (session.getAttribute("lastRequests") == null) {
             session.setAttribute("lastRequests", paramsString);
         } else {
-            session.setAttribute("lastRequests", paramsString + ";" + (String)(session.getAttribute("lastRequests")));
+            session.setAttribute("lastRequests", paramsString + ";" + (String) (session.getAttribute("lastRequests")));
         }
     }
 
-    private void modifyAreaImage(float x, float y, float r, boolean got, HttpSession session) {
-        BufferedImage bImage = null;
-        if (session.getAttribute("areaImage") == null) {
-            bImage = loadImage();
-        } else {
-            bImage = (BufferedImage) session.getAttribute("areaImage");
-        }
-        if (got) {
-            addDotToArea(bImage, x, y, r, Color.decode("#E61B43"));
-        } else {
-            addDotToArea(bImage, x, y, r, Color.gray);
+    private void modifyAreaImage(HttpSession session, float rMain) {
+        BufferedImage bImage = loadImage();
+
+        String lastRequests = (String) session.getAttribute("lastRequests");
+        String[] requests = lastRequests.split(";");
+        for (String request : requests) {
+            String[] parameters = request.split(",");
+
+            float x = Float.valueOf(parameters[0]);
+            float y = Float.valueOf(parameters[1]);
+            float r = Float.valueOf(parameters[2]);
+
+            boolean got = checkDot(x, y, rMain);
+
+            if (got) {
+                addDotToArea(bImage, x, y, rMain, Color.decode("#E61B43"));
+            } else {
+                addDotToArea(bImage, x, y, rMain, Color.gray);
+            }
+
+
+
         }
 
         session.setAttribute("areaImage", bImage);

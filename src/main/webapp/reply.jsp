@@ -18,32 +18,28 @@
 </header>
 <table class="centering">
     <tr>
-        <td class="menuBlock">
+        <td class="menuBlock" width="50%">
         <span>
             X:
             <%= String.valueOf(request.getParameter("X")) %>
         </span>
         </td>
-    </tr>
-
-    <tr>
-        <td class="menuBlock">
-        <span>
-            Y:
-            <%= String.valueOf(request.getParameter("Y")) %>
-        </span>
-        </td>
-    </tr>
-    <tr>
-        <td class="menuBlock">
+        <td class="menuBlock" width="50%">
         <span>
             R:
             <%= String.valueOf(request.getParameter("R")) %>
         </span>
         </td>
     </tr>
+
     <tr>
-        <td class="menuBlock">
+        <td class="menuBlock" width="50%">
+        <span>
+            Y:
+            <%= String.valueOf(request.getParameter("Y")) %>
+        </span>
+        </td>
+        <td class="menuBlock" width="50%">
         <span>
             Попала:
             <%
@@ -57,7 +53,7 @@
         </td>
     </tr>
     <tr>
-        <td class="menuBlock">
+        <td class="menuBlock" colspan="2">
             <a href="/lab2/ControllerServlet"><span>На главную</span></a>
         </td>
     </tr>
